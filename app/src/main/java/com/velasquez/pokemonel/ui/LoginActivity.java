@@ -1,11 +1,9 @@
-package com.velasquez.pokemonel;
+package com.velasquez.pokemonel.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,7 +11,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.velasquez.pokemonel.R;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +33,9 @@ public class LoginActivity extends AppCompatActivity {
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             signInIntent();
+        } else {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
     }
 
@@ -46,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == RESULT_OK) {
                 mTvError.setVisibility(View.GONE);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                Log.d(TAG, "onActivityResult: user display name " + user.getDisplayName());
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
             } else {
                 mTvError.setVisibility(View.VISIBLE);
                 if (response == null) {
